@@ -1,101 +1,241 @@
+'use client';
+import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+const AppLayout = () => {
+  const [isFeatureOpen, setIsFeatureOpen] = useState(false);
+  const [isCompanyOpen, setIstCompanyOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleFeatureDropdown = () => {
+    setIsFeatureOpen(!isFeatureOpen);
+    setIstCompanyOpen(false);
+  };
+
+  const toggleCompanyDropdown = () => {
+    setIstCompanyOpen(!isCompanyOpen);
+    setIsFeatureOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="p-6 w-full h-screen flex flex-col">
+      {/* Header */}
+      <header className="w-full flex justify-between items-center">
+        <div className="flex items-center">
+          <div className="w-20">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/images/logo.svg"
+              alt="Company Logo"
+              width={100}
+              height={50}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex ml-6">
+            <ul className="flex gap-4">
+              <li className="relative">
+                <button
+                  onClick={toggleFeatureDropdown}
+                  className="flex items-center gap-1"
+                >
+                  Features
+                  <Image
+                    src="/images/icon-arrow-up.svg"
+                    alt="arrow icon"
+                    width={10}
+                    height={10}
+                  />
+                </button>
+                {isFeatureOpen && (
+                  <ul className="absolute left-0 border rounded-lg bg-white w-36 mt-2 z-20">
+                    <li className="px-4 py-2 flex gap-2">
+                      <Image
+                        src="/images/icon-todo.svg"
+                        alt="todo icon"
+                        width={20}
+                        height={10}
+                      />
+                      <Link href="/features/feature1">Todo List</Link>
+                    </li>
+                    <li className="px-4 py-2 flex gap-2">
+                      <Image
+                        src="/images/icon-calendar.svg"
+                        alt="calendar icon"
+                        width={20}
+                        height={10}
+                      />
+                      <Link href="/features/features2">Calendar</Link>
+                    </li>
+                    <li className="px-4 py-2 flex gap-2">
+                      <Image
+                        src="/images/icon-reminders.svg"
+                        alt="reminder icon"
+                        width={20}
+                        height={10}
+                      />
+                      <Link href="/features/features3">Reminders</Link>
+                    </li>
+                    <li className="px-4 py-2 flex gap-2">
+                      <Image
+                        src="/images/icon-planning.svg"
+                        alt="planning icon"
+                        width={20}
+                        height={10}
+                      />
+                      <Link href="/features/features4">Planning</Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li className="relative">
+                <button
+                  onClick={toggleCompanyDropdown}
+                  className="flex items-center gap-1"
+                >
+                  Company
+                  <Image
+                    src="/images/icon-arrow-up.svg"
+                    alt="arrow icon"
+                    width={10}
+                    height={10}
+                  />
+                </button>
+                {isCompanyOpen && (
+                  <ul className="absolute left-0 border rounded-lg bg-white w-32 mt-2">
+                    <li className="px-4 py-2">
+                      <Link href="/company/history">History</Link>
+                    </li>
+                    <li className="px-4 py-2">
+                      <Link href="/company/team">Our Team</Link>
+                    </li>
+                    <li className="px-4 py-2">
+                      <Link href="/company/blog">Blog</Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li>
+                <Link href="/careers">Careers</Link>
+              </li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        {/* Mobile Navigation */}
+        <div className="md:hidden">
+          <button onClick={toggleMobileMenu}>
+            <Image
+              src="/images/icon-menu.svg"
+              alt="menu icon"
+              width={24}
+              height={24}
+            />
+          </button>
+          {isMobileMenuOpen && (
+            <div className="absolute top-0 left-0 bg-white w-1/2 h-full z-10 p-6 shadow-lg">
+              <button onClick={toggleMobileMenu} className="mb-4">
+                <Image
+                  src="/images/icon-close-menu.svg"
+                  alt="close menu icon"
+                  width={24}
+                  height={24}
+                />
+              </button>
+              <nav>
+                <ul className="flex flex-col gap-4">
+                  <li>
+                    <button onClick={toggleFeatureDropdown}>
+                      Features
+                    </button>
+                    {isFeatureOpen && (
+                      <ul className="mt-2 max-h-60 overflow-auto">
+                        <li>
+                          <Link href="/features/feature1">Todo List</Link>
+                        </li>
+                        <li>
+                          <Link href="/features/feature2">Calendar</Link>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                  <li>
+                    <button onClick={toggleCompanyDropdown}>
+                      Company
+                    </button>
+                    {isCompanyOpen && (
+                      <ul className="mt-2">
+                        <li>
+                          <Link href="/company/history">History</Link>
+                        </li>
+                        <li>
+                          <Link href="/company/team">Our Team</Link>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                  <li>
+                    <Link href="/careers">Careers</Link>
+                  </li>
+                  <li>
+                    <Link href="/about">About</Link>
+                  </li>
+                  {/* Login and Register Links for Mobile */}
+                  <li>
+                    <Link href="/login">Login</Link>
+                  </li>
+                  <li>
+                    <Link href="/register" className="border border-blue-500 rounded-[10px] px-2">
+                      Register
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          )}
+        </div>
+        {/* Desktop Login and Register Links */}
+        <div className="hidden md:flex gap-6">
+          <Link href="/login">Login</Link>
+          <Link
+            href="/register"
+            className="border border-blue-500 rounded-[10px] px-2"
+          >
+            Register
+          </Link>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex flex-col md:flex-row gap-6 py-12 px-6">
+        <div className="md:w-1/2 pl-10 mt-20">
+          <h1 className="font-extrabold text-4xl sm:text-5xl md:text-7xl leading-tight">Make <br />remote work</h1>
+          <p className="mt-10 text-gray-400">Get your team in sync, no matter your location. Streamline processes, create team rituals, and watch productivity soar.</p>
+          <button className="rounded-lg border border-1 border-black px-4 py-2 mt-20 font-semibold">Learn more</button>
+          <div className="w-full mt-20 flex gap-6 flex-wrap">
+            <Image src="/images/client-databiz.svg" alt="Databiz Logo" width={60} height={10} />
+            <Image src="/images/client-audiophile.svg" alt="Audiophile Logo" width={60} height={10} />
+            <Image src="/images/client-meet.svg" alt="Meet Logo" width={60} height={10} />
+            <Image src="/images/client-maker.svg" alt="Maker Logo" width={60} height={10} />
+          </div>
+        </div>
+        <div className="md:w-1/2 relative h-96 md:h-[550px] order-first md:order-last">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/images/image-hero-desktop.png"
+            alt="hero"
+            layout="fill"
+            objectFit="contain"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default AppLayout;
